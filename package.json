@@ -1,0 +1,23 @@
+{
+  "name": "@jeebby/node-crodeon",
+  "version": "1.0.0",
+  "description": "Crodeon Node-RED nodes",
+  "keywords": [
+    "Crodeon",
+    "Node-RED",
+    "Nodes",
+    "Jeebby"
+  ],
+  "author": "Stijn Leenknegt",
+  "license": "MIT",
+  "node-red": {
+    "nodes": {
+      "sensor": "crodeon/sensor.js",
+      "api-credentials": "crodeon/api-credentials.js",
+      "reporter": "crodeon/reporter.js"
+    }
+  },
+  "dependencies": {
+    "axios": "^1.2.4"
+  }
+}

@@ -1,0 +1,48 @@
+<script type="text/javascript">
+    RED.nodes.registerType('sensor',{
+        category: 'crodeon',
+        color: '#C0C0C0',
+        defaults: {
+            api_credentials: {
+                value: '',
+                type: 'api-credentials',
+                required: true
+            },
+            reporter: {
+                value: '',
+                required: true,
+                type: 'reporter'
+            },
+            sensor: {
+                value: '',
+                required: true,
+                type: 'text'
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "rocket",
+        label: function() {
+            return "Sensor " + this.sensor;
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="sensor">
+    <div class="form-row">
+        <label for="node-input-api_credentials"><i class="fa fa-shield"></i> API login</label>
+        <input type="text" id="node-input-api_credentials">
+    </div>
+    <div class="form-row">
+        <label for="node-input-reporter"><i class="fa fa-server"></i> Reporter</label>
+        <input type="text" id="node-input-reporter">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sensor"><i class="fa fa-tag"></i> Sensor</label>
+        <input type="text" id="node-input-sensor">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="sensor">
+    <p>Get the last value of the sensor you want to read.</p>
+</script>
