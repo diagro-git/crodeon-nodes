@@ -25,35 +25,47 @@ module.exports = function(RED) {
                 //node status is ok 
                 //msg.payload is value from sensor
                 //if response doesn't contain the sensor name, error "unknown sensor"
-                var result = response.data;
-                if(result[config.sensor] !== undefined) {
-                    const strDateTime = `${result['Date']}T${result['Time']}.000Z`;
-                    msg.payload = result[config.sensor];
-                    msg.datetime = new Date(strDateTime);
-                    msg.crodeonId = result['ID'];
-                    msg.sensorHasValue = true;
-                    
-                    node.status({fill:"green",shape:"dot",text:`value: ${msg.payload}`});
-                } else {
-                    node.status({fill:"yellow",shape:"ring",text:`Sensor ${config.sensor} not found.`});
-                    msg.payload = `Sensor ${config.sensor} not found.`;
-                    msg.sensorHasValue = false;
+                const result = response.data;
+                const msgs = [];
+                const dt = new Date(`${result['Date']}T${result['Time']}.000Z`);
+                for(let i = 0 ; i < config.sensors.length ; i++) {
+                    if(result.hasOwnProperty(config.sensors[i].name)) {
+                        msgs[i] = {
+                            sensor: config.sensors[i].name,
+                            payload: result[config.sensors[i].name],
+                            crodeonId: result['ID'],
+                            datetime: dt
+                        };
+                    } else {
+                        msgs[i] = null;
+                    }
                 }
+                msgs.push(null);
 
+                //status
+                node.status({fill:"green",shape:"dot",text:`value: ${result['ID']}`});
                 //send msg to next node.
-                node.send(msg);
+                node.send(msgs);
             })
             .catch(function(error) {
-                const response = error.response;
+                let status = error.hasOwnProperty('code') ? error.code : 'Error unknown!';
+                let payload = error.hasOwnProperty('message') ? error.message : 'Error unknown!';
 
                 //node status is error
-                node.status({fill:"red",shape:"ring",text:response});
+                node.status({fill:"red", shape:"ring", text:status});
+
+                //msgs
+                const msgs = [];
+                for(let i = 0 ; i < config.sensors.length ; i++) {
+                    msgs[i] = null;
+                }
+                msgs.push({
+                    payload: payload,
+                    error: error
+                });
 
                 //send msg to next node.
-                msg.sensorHasValue = false;
-                msg.payload = error;
-                msg.error = error;
-                node.send(msg);
+                node.send(msgs);
             });
         });
     }

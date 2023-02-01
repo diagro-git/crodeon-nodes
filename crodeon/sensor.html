@@ -13,17 +13,69 @@
                 required: true,
                 type: 'reporter'
             },
-            sensor: {
-                value: '',
-                required: true,
-                type: 'text'
+            sensors: {
+                value: [
+                    {name: ''}
+                ],
+                required: true
+            },
+            outputs: {
+                value: 2
             }
         },
         inputs: 1,
-        outputs: 1,
-        icon: "rocket",
+        outputs: 2,
+        outputLabels: function(index) {
+            if(index < this.sensors.length) {
+                return this.sensors[index].name;
+            } else {
+                return 'Error';
+            }
+        },
+        icon: "font-awesome/fa-rocket",
         label: function() {
-            return "Sensor " + this.sensor;
+            if(this.sensors.length === 1) {
+                return "Sensor: " + this.sensors[0].name;
+            } else {
+                return "Sensors: " + this.sensors.length;
+            }
+        },
+        oneditprepare: function() {
+            $('#node-input-sensors-container').css('min-height','250px').css('min-width','450px').editableList({
+                addItem: function(row, index, data) {
+                    const fr = $('<div/>', {class: 'form-group'});
+                    const lbl = $('<label/>', {class: 'font-weight-bold'}).html('&nbsp;Naam');
+                    const lblIcon = $('<i/>', {class: 'fa fa-pencil'});
+                    const input = $('<input/>', {type: 'text', class: 'node-crodeon-sensor-name'});
+                    if(data.hasOwnProperty('name')) {
+                        input.val(data.name);
+                    }
+                    lbl.prepend(lblIcon);
+                    fr.append(lbl);
+                    fr.append(input);
+                    $(row).append(fr);                    
+                },
+                addButton: 'Sensor'
+            });
+
+            for (let i = 0 ; i < this.sensors.length ; i++) {
+                $("#node-input-sensors-container").editableList('addItem',this.sensors[i]);
+            }
+        },
+        oneditsave: function() {
+            const sensors = $("#node-input-sensors-container").editableList('items');
+            this.sensors = [];
+            this.outputs = sensors.length + 1;
+            let value = null;
+            const node = this;
+            sensors.each(function(idx) {
+                value = $(this).find('.node-crodeon-sensor-name').val();
+                if(value != '') {
+                    node.sensors[idx] = {
+                        name: value
+                    }
+                }
+            });
         }
     });
 </script>
@@ -37,12 +89,14 @@
         <label for="node-input-reporter"><i class="fa fa-server"></i> Reporter</label>
         <input type="text" id="node-input-reporter">
     </div>
-    <div class="form-row">
-        <label for="node-input-sensor"><i class="fa fa-tag"></i> Sensor</label>
-        <input type="text" id="node-input-sensor">
+    <div class="form-row" style="margin-bottom:0;">
+        <label><i class="fa fa-list"></i> <span>Sensors</span></label>
+    </div>
+    <div class="form-row node-input-sensors-container-row">
+        <ol id="node-input-sensors-container"></ol>
     </div>
 </script>
 
 <script type="text/html" data-help-name="sensor">
-    <p>Get the last value of the sensor you want to read.</p>
+    <p>Get the last value of the sensor(s) you want to read.</p>
 </script>
