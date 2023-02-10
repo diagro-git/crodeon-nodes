@@ -3,6 +3,7 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         this.name = config.name;
         this.id = config.id;
+        this.sensors = config.sensors;
     }
 	
     RED.nodes.registerType("reporter",CrodeonReporter);

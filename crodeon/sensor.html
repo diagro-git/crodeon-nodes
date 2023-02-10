@@ -1,5 +1,6 @@
 <script type="text/javascript">
-    RED.nodes.registerType('sensor',{
+(function() {
+    RED.nodes.registerType('sensor', {
         category: 'crodeon',
         color: '#C0C0C0',
         defaults: {
@@ -13,18 +14,18 @@
                 required: true,
                 type: 'reporter'
             },
+            _sensors: {
+                value: ""
+            },
             sensors: {
-                value: [
-                    {name: ''}
-                ],
-                required: true
+                value: []
             },
             outputs: {
-                value: 2
+                value: 1
             }
         },
         inputs: 1,
-        outputs: 2,
+        outputs: 1,
         outputLabels: function(index) {
             if(index < this.sensors.length) {
                 return this.sensors[index].name;
@@ -41,43 +42,37 @@
             }
         },
         oneditprepare: function() {
-            $('#node-input-sensors-container').css('min-height','250px').css('min-width','450px').editableList({
-                addItem: function(row, index, data) {
-                    const fr = $('<div/>', {class: 'form-group'});
-                    const lbl = $('<label/>', {class: 'font-weight-bold'}).html('&nbsp;Naam');
-                    const lblIcon = $('<i/>', {class: 'fa fa-pencil'});
-                    const input = $('<input/>', {type: 'text', class: 'node-crodeon-sensor-name'});
-                    if(data.hasOwnProperty('name')) {
-                        input.val(data.name);
-                    }
-                    lbl.prepend(lblIcon);
-                    fr.append(lbl);
-                    fr.append(input);
-                    $(row).append(fr);                    
-                },
-                addButton: 'Sensor'
-            });
-
-            for (let i = 0 ; i < this.sensors.length ; i++) {
-                $("#node-input-sensors-container").editableList('addItem',this.sensors[i]);
+            const that = this;
+            const reporter = RED.nodes.node(this.reporter);
+            let options = [];
+            if(reporter !== void 0) {
+                for(let i = 0 ; i < reporter.sensors.length ; i++) {
+                    options.push({value: reporter.sensors[i].name, label: reporter.sensors[i].name});
+                }
             }
-        },
-        oneditsave: function() {
-            const sensors = $("#node-input-sensors-container").editableList('items');
-            this.sensors = [];
-            this.outputs = sensors.length + 1;
-            let value = null;
-            const node = this;
-            sensors.each(function(idx) {
-                value = $(this).find('.node-crodeon-sensor-name').val();
-                if(value != '') {
-                    node.sensors[idx] = {
-                        name: value
-                    }
+
+            $("#node-input-_sensors").typedInput({type:"_sensors", types:[{
+                value: "_sensors",
+                multiple: true,
+                options: options
+            }]});
+
+            RED.events.on('nodes:add', function(node) {
+                if(node.type === 'reporter' && that.reporter == node.id) {
                 }
             });
+
+            RED.events.on('nodes:change', function(node) {
+                if(node.type === 'reporter' && that.reporter == node.id) {
+                }
+            });
+        },
+        oneditsave: function() {
+            this.sensors = $("#node-input-_sensors").typedInput('value').split(',').map(s => new Object({name: s}));
+            this.outputs = this.sensors.length + 1;
         }
     });
+})();
 </script>
 
 <script type="text/html" data-template-name="sensor">
@@ -89,11 +84,9 @@
         <label for="node-input-reporter"><i class="fa fa-server"></i> Reporter</label>
         <input type="text" id="node-input-reporter">
     </div>
-    <div class="form-row" style="margin-bottom:0;">
-        <label><i class="fa fa-list"></i> <span>Sensors</span></label>
-    </div>
-    <div class="form-row node-input-sensors-container-row">
-        <ol id="node-input-sensors-container"></ol>
+    <div class="form-row">
+        <label for="node-input-_sensors"><i class="fa fa-list"></i> Sensor(s)</label>
+        <input type="text" id="node-input-_sensors">
     </div>
 </script>
 

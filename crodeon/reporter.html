@@ -4,17 +4,55 @@
         defaults: {
             name: {
                 value: "",
-                required: true,
-                type: "text"
+                required: true
             },
             id: {
                 value: "",
-                required: true,
-                type: "numeric"
+                required: true
+            },
+            sensors: {
+                value: []
             }
         },
         label: function() {
             return this.name;
+        },
+        oneditprepare: function() {
+            const node = this;
+            
+            $("#node-input-sensor-container").css('min-height','300px').css('min-width','450px').editableList({
+                addItem: function(container, i, data) {
+                    const formGroup = $('<div/>', {class: 'form-group'});
+                    const lbl = $('<label/>', {class: 'font-weight-bold'}).html('&nbsp;Naam');
+                    const lblIcon = $('<i/>', {class: 'fa fa-pencil'});
+                    const inputName = $('<input/>', {type: 'text', class: 'node-crodeon-sensor-name'});
+                    if(data.hasOwnProperty('name')) {
+                        inputName.val(data.name);
+                    }
+                    lbl.prepend(lblIcon);
+                    formGroup.append(lbl);
+                    formGroup.append(inputName);
+                    $(container).append(formGroup);   
+                }
+            });
+
+            for (let i = 0 ; i < this.sensors.length ; i++) {
+                $("#node-input-sensor-container").editableList('addItem', this.sensors[i]);
+            }
+        },
+        oneditsave: function() {
+            const sensors = $("#node-input-sensor-container").editableList('items');
+            this.sensors = [];
+            let value = null;
+            const node = this;
+            sensors.each(function(idx) {
+                value = $(this).find('.node-crodeon-sensor-name').val();
+                if(value != '') {
+                    node.sensors[idx] = {
+                        name: value
+                    }
+                }
+            });
         }
     });
 </script>
@@ -27,5 +65,8 @@
     <div class="form-row">
         <label for="node-config-input-id"><i class="fa fa-id-card"></i> ID</label>
         <input type="number" id="node-config-input-id">
+    </div>
+    <div class="form-row node-input-sensor-container-row">
+        <ol id="node-input-sensor-container"></ol>
     </div>
 </script>
