@@ -1,5 +1,16 @@
 <script type="text/javascript">
 (function() {
+    function getSensorTypeOptions(reporter)
+    {
+        let options = [];
+        if(reporter !== void 0) {
+            for(let i = 0 ; i < reporter.sensors.length ; i++) {
+                options.push({value: reporter.sensors[i].name, label: reporter.sensors[i].name});
+            }
+        }
+        return options;
+    }
+
     RED.nodes.registerType('sensor', {
         category: 'crodeon',
         color: '#C0C0C0',
@@ -44,31 +55,43 @@
         oneditprepare: function() {
             const that = this;
             const reporter = RED.nodes.node(this.reporter);
-            let options = [];
-            if(reporter !== void 0) {
-                for(let i = 0 ; i < reporter.sensors.length ; i++) {
-                    options.push({value: reporter.sensors[i].name, label: reporter.sensors[i].name});
-                }
-            }
 
             $("#node-input-_sensors").typedInput({type:"_sensors", types:[{
                 value: "_sensors",
                 multiple: true,
-                options: options
+                options: getSensorTypeOptions(RED.nodes.node(this.reporter))
             }]});
 
             RED.events.on('nodes:add', function(node) {
-                if(node.type === 'reporter' && that.reporter == node.id) {
+                if(node.type === 'reporter') {       
+                    setTimeout(function() {
+                        $("#node-input-_sensors").typedInput('types', [{
+                            value: "_sensors",
+                            multiple: true,
+                            options: getSensorTypeOptions(RED.nodes.node(node.id))
+                        }]);
+                    }, 300);
                 }
             });
 
             RED.events.on('nodes:change', function(node) {
-                if(node.type === 'reporter' && that.reporter == node.id) {
+                if(node.type === 'reporter' && that.reporter === node.id) {   
+                    setTimeout(function() {
+                        $("#node-input-_sensors").typedInput('types', [{
+                            value: "_sensors",
+                            multiple: true,
+                            options: getSensorTypeOptions(RED.nodes.node(node.id))
+                        }]);
+                    }, 300);
                 }
             });
         },
         oneditsave: function() {
-            this.sensors = $("#node-input-_sensors").typedInput('value').split(',').map(s => new Object({name: s}));
+            this.sensors = $("#node-input-_sensors")
+                                .typedInput('value')
+                                .split(',')
+                                .filter(s => s != '')
+                                .map(s => new Object({name: s}));
             this.outputs = this.sensors.length + 1;
         }
     });
