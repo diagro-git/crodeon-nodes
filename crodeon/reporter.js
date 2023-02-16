@@ -4,6 +4,7 @@ module.exports = function(RED) {
         this.name = config.name;
         this.id = config.id;
         this.sensors = config.sensors;
+        this.relaisOutputs = config.relaisOutputs;
     }
 	
     RED.nodes.registerType("reporter",CrodeonReporter);

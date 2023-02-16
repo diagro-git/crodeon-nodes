@@ -13,7 +13,7 @@
             sensors: {
                 value: []
             },
-            relais: {
+            relaisOutputs: {
                 value: []
             }
         },
@@ -22,11 +22,27 @@
         },
         oneditprepare: function() {
             const node = this;
+
+            const tabs = RED.tabs.create({
+                id: "node-config-reporter-tabs",
+                onchange: function(tab) {
+                    $("#node-config-reporter-tabs-content").children().hide();
+                    $("#" + tab.id).show();
+                }
+            });
+            tabs.addTab({
+                id: "reporter-tab-sensors",
+                label: 'Sensoren'
+            });
+            tabs.addTab({
+                id: "reporter-tab-relaisOutputs",
+                label: 'Relais outputs'
+            });
             
             $("#node-input-sensor-container").css('min-height','300px').css('min-width','450px').editableList({
                 addItem: function(container, i, data) {
                     const formGroup = $('<div/>', {class: 'form-group'});
-                    const lbl = $('<label/>', {class: 'font-weight-bold'}).html('&nbsp;Naam');
+                    const lbl = $('<label/>', {style: 'text-align: right; font-weight: bold;'}).html('&nbsp;Naam&nbsp;&nbsp;');
                     const lblIcon = $('<i/>', {class: 'fa fa-pencil'});
                     const inputName = $('<input/>', {type: 'text', class: 'node-crodeon-sensor-name'});
                     if(data.hasOwnProperty('name')) {
@@ -36,23 +52,65 @@
                     formGroup.append(lbl);
                     formGroup.append(inputName);
                     $(container).append(formGroup);   
-                }
+                },
+                removable: true
+            });
+            
+            $("#node-input-relaisOutputs-container").css('min-height','300px').css('min-width','450px').editableList({
+                addItem: function(container, i, data) {
+                    const formGroup = $('<div/>', {class: 'form-group'});
+                    const formGroup2 = $('<div/>', {class: 'form-group', style: 'margin-top: 10px;'});
+                    const lblName = $('<label/>', {style: 'text-align: right; font-weight: bold;'}).html('&nbsp;Naam&nbsp;&nbsp;');
+                    const lblId = $('<label/>', {style: 'text-align: right;'}).html('ID&nbsp;&nbsp;');
+                    const lblIcon = $('<i/>', {class: 'fa fa-pencil'});
+                    const inputrelaisOutputName = $('<input/>', {type: 'text', class: 'node-crodeon-relais-output-name'});
+                    const inputrelaisOutputId = $('<input/>', {type: 'number', class: 'node-crodeon-relais-output-id'});
+                    if(data.hasOwnProperty('id')) {
+                        inputrelaisOutputId.val(data.id);
+                    }
+                    if(data.hasOwnProperty('name')) {
+                        inputrelaisOutputName.val(data.name);
+                    }
+                    lblName.prepend(lblIcon);
+                    formGroup.append(lblName);
+                    formGroup.append(inputrelaisOutputName);
+                    formGroup2.append(lblId);
+                    formGroup2.append(inputrelaisOutputId);
+                    $(container).append(formGroup);  
+                    $(container).append(formGroup2); 
+                },
+                removable: true
             });
 
             for (let i = 0 ; i < this.sensors.length ; i++) {
                 $("#node-input-sensor-container").editableList('addItem', this.sensors[i]);
             }
+
+            for (let i = 0 ; i < this.relaisOutputs.length ; i++) {
+                $("#node-input-relaisOutputs-container").editableList('addItem', this.relaisOutputs[i]);
+            }
         },
         oneditsave: function() {
             const sensors = $("#node-input-sensor-container").editableList('items');
+            const relaisOutputs = $("#node-input-relaisOutputs-container").editableList('items');
             this.sensors = [];
-            let value = null;
+            this.relaisOutputs = [];
             const node = this;
             sensors.each(function(idx) {
-                value = $(this).find('.node-crodeon-sensor-name').val();
+                let value = $(this).find('.node-crodeon-sensor-name').val();
                 if(value != '') {
                     node.sensors[idx] = {
                         name: value
+                    }
+                }
+            });
+            sensrelaisOutputsors.each(function(idx) {
+                let id = $(this).find('.node-crodeon-relais-output-id').val();
+                let name = $(this).find('.node-crodeon-relais-output-name').val();
+                if(relaisOutputId != '') {
+                    node.relaisOutputs[idx] = {
+                        id: id,
+                        name: name
                     }
                 }
             });
@@ -69,7 +127,19 @@
         <label for="node-config-input-id"><i class="fa fa-id-card"></i> ID</label>
         <input type="number" id="node-config-input-id">
     </div>
-    <div class="form-row node-input-sensor-container-row">
-        <ol id="node-input-sensor-container"></ol>
+    <div class="form-row">
+        <ul style="min-width: 600px; margin-bottom: 20px;" id="node-config-reporter-tabs"></ul>
     </div>
+    <div id="node-config-reporter-tabs-content" style="min-height:300px;">
+        <div id="reporter-tab-sensors">
+            <div class="form-row node-input-sensor-container-row">
+                <ol id="node-input-sensor-container"></ol>
+            </div>
+        </div>
+        <div id="reporter-tab-relaisOutputs">
+            <div class="form-row node-input-relaisOutputs-container-row">
+                <ol id="node-input-relaisOutputs-container"></ol>
+            </div>
+        </div>
+    </div>    
 </script>
