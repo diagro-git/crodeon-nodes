@@ -70,11 +70,14 @@
                             multiple: true,
                             options: getSensorTypeOptions(RED.nodes.node(node.id))
                         }]);
-                    }, 300);
+                    }, 500);
                 }
             });
 
             RED.events.on('nodes:change', function(node) {
+                //that.reporter ==== node.id
+                //of
+                //that.reporter === null? -> node.id is selected -> getValue() ofzo
                 if(node.type === 'reporter' && that.reporter === node.id) {   
                     setTimeout(function() {
                         $("#node-input-_sensors").typedInput('types', [{
@@ -82,7 +85,7 @@
                             multiple: true,
                             options: getSensorTypeOptions(RED.nodes.node(node.id))
                         }]);
-                    }, 300);
+                    }, 500);
                 }
             });
         },

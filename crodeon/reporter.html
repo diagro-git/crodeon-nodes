@@ -104,10 +104,10 @@
                     }
                 }
             });
-            sensrelaisOutputsors.each(function(idx) {
+            relaisOutputs.each(function(idx) {
                 let id = $(this).find('.node-crodeon-relais-output-id').val();
                 let name = $(this).find('.node-crodeon-relais-output-name').val();
-                if(relaisOutputId != '') {
+                if(id != '' && name != '') {
                     node.relaisOutputs[idx] = {
                         id: id,
                         name: name
