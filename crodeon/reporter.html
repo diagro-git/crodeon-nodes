@@ -53,7 +53,8 @@
                     formGroup.append(inputName);
                     $(container).append(formGroup);   
                 },
-                removable: true
+                removable: true,
+                addButton: 'Sensor'
             });
             
             $("#node-input-relaisOutputs-container").css('min-height','300px').css('min-width','450px').editableList({
@@ -79,7 +80,8 @@
                     $(container).append(formGroup);  
                     $(container).append(formGroup2); 
                 },
-                removable: true
+                removable: true,
+                addButton: 'Relais output'
             });
 
             for (let i = 0 ; i < this.sensors.length ; i++) {

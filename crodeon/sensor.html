@@ -75,16 +75,28 @@
             });
 
             RED.events.on('nodes:change', function(node) {
-                //that.reporter ==== node.id
-                //of
-                //that.reporter === null? -> node.id is selected -> getValue() ofzo
-                if(node.type === 'reporter' && that.reporter === node.id) {   
+                if(node.type === 'reporter') {   
                     setTimeout(function() {
                         $("#node-input-_sensors").typedInput('types', [{
                             value: "_sensors",
                             multiple: true,
                             options: getSensorTypeOptions(RED.nodes.node(node.id))
                         }]);
+                    }, 500);
+                }
+            });
+
+            RED.events.on('nodes:remove', function(node) {
+                if(node.type === 'reporter') {   
+                    setTimeout(function() {
+                        $("#node-input-_sensors").typedInput('types', [{
+                            value: "_sensors",
+                            multiple: true,
+                            options: []
+                        }]);
+                        that.sensors = [];
+                        that._sensors = '';
+                        that.outputs = 1;
                     }, 500);
                 }
             });
