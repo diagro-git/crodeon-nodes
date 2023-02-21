@@ -1,7 +1,28 @@
 var axios = require('axios');
 
 module.exports = function(RED, node, msg) {
-    const url = `https://api.crodeon.com/api/v1/datasinceid/id/${node.reporter.id}/sinceid/${node.sinceId}`;
+    let sinceId = node.sinceId;
+    if(node.sinceIdType === 'msg') {
+        sinceId = msg[sinceId];
+    }
+    const url = `https://api.crodeon.com/api/v1/datasinceid/id/${node.reporter.id}/sinceid/${sinceId}`;
+
+    axios.interceptors.request.use(function (config) {
+        node.status({fill:"yellow",shape:"dot",text:'Bezig...'});
+        return config;
+      }, function (error) {
+        return Promise.reject(error);
+      }
+    );
+
+    axios.interceptors.response.use(function (response) {
+        node.status({fill:"yellow",shape:"dot",text:'Verwerken...'});
+        return response;
+        }, function (error) {
+        return Promise.reject(error);
+        }
+    );
+
     axios.get(url, {
         headers: {
             "User-Agent": "node-red",
@@ -38,7 +59,7 @@ module.exports = function(RED, node, msg) {
                     msgs[i].push(null);
                 }
             }
-        });        
+        });
 
         //status
         node.status({fill:"green",shape:"dot",text:`Results: ${results.length}`});

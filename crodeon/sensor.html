@@ -39,6 +39,15 @@
             },
             sinceId: {
                 value: 0
+            },
+            sinceIdType: {
+                value: 'msg'
+            },
+            lastDays: {
+                value: 0
+            },
+            lastDaysType: {
+                value: 'msg'
             }
         },
         inputs: 1,
@@ -112,21 +121,33 @@
                 value: "action",
                 options: [
                     { value: "latest", label: "Laatste waarde"},
-                    { value: "sinceId", label: "Vanaf bepaalde ID"}
+                    { value: "sinceId", label: "Vanaf bepaalde ID"},
+                    { value: "lastDays", label: "Laatste dagen"}
                 ]
             }]});
 
             $("#node-input-action").on('change', function(event, type, value) {
-                if(value === 'sinceId') {
-                    $(".action-sinceId").css('display', 'block');
-                } else {
-                    that.sinceId = 0;
-                    $(".action-sinceId").css('display', 'none');
-                }
+                $("div[data-action='" + value + "']").css('display', 'block');
+                $("div[data-action]").each(function(idx, div) {
+                    if($(div).data('action') != value) {
+                        $(div).css('display', 'none');
+                    }
+                });
             });
 
             //since id
-            $("#node-input-sinceId").typedInput({type: 'msg', types: ['msg', 'int']});
+            $("#node-input-sinceId").typedInput({
+                type: 'msg', 
+                types: ['msg', 'num'],
+                typeField: '#node-input-sinceIdType'
+            });
+
+            //last days
+            $("#node-input-lastDays").typedInput({
+                type: 'msg', 
+                types: ['msg', 'num'],
+                typeField: '#node-input-lastDaysType'
+            });
         },
         oneditsave: function() {
             this.sensors = $("#node-input-_sensors")
@@ -157,9 +178,15 @@
         <label for="node-input-action"><i class="fa fa-flash"></i> Actie</label>
         <input type="text" id="node-input-action">
     </div>
-    <div class="form-row action-sinceId" style="display: none;">
+    <div class="form-row" data-action="sinceId">
         <label for="node-input-sinceId"><i class="fa fa-pencil"></i> Crodeon ID</label>
         <input type="text" id="node-input-sinceId">
+        <input type="hidden" id="node-input-sinceIdType">
+    </div>
+    <div class="form-row" data-action="lastDays">
+        <label for="node-input-lastDays"><i class="fa fa-pencil"></i> Laatste dagen</label>
+        <input type="text" id="node-input-lastDays">
+        <input type="hidden" id="node-input-lastDaysType">
     </div>
 </script>
 
