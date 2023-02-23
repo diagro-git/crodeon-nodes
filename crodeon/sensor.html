@@ -48,6 +48,12 @@
             },
             lastDaysType: {
                 value: 'msg'
+            },
+            sinceIsoDate: {
+                value: 0
+            },
+            sinceIsoDateType: {
+                value: 'msg'
             }
         },
         inputs: 1,
@@ -122,7 +128,8 @@
                 options: [
                     { value: "latest", label: "Laatste waarde"},
                     { value: "sinceId", label: "Vanaf bepaalde ID"},
-                    { value: "lastDays", label: "Laatste dagen"}
+                    { value: "lastDays", label: "Laatste dagen"},
+                    { value: "sinceIsoDate", label: "Sinds datum"}
                 ]
             }]});
 
@@ -147,6 +154,13 @@
                 type: 'msg', 
                 types: ['msg', 'num'],
                 typeField: '#node-input-lastDaysType'
+            });
+
+            //since date
+            $("#node-input-sinceIsoDate").typedInput({
+                type: 'msg', 
+                types: ['msg', 'str'],
+                typeField: '#node-input-sinceIsoDateType'
             });
         },
         oneditsave: function() {
@@ -188,8 +202,13 @@
         <input type="text" id="node-input-lastDays">
         <input type="hidden" id="node-input-lastDaysType">
     </div>
+    <div class="form-row" data-action="sinceIsoDate">
+        <label for="node-input-sinceIsoDate"><i class="fa fa-pencil"></i> Datum (ISO-8601)</label>
+        <input type="text" id="node-input-sinceIsoDate">
+        <input type="hidden" id="node-input-sinceIsoDateType">
+    </div>
 </script>
 
 <script type="text/html" data-help-name="sensor">
-    <p>Get the last value of the sensor(s) you want to read.</p>
+    <p>Get the last value(s) of the sensor(s) you want to read.</p>
 </script>

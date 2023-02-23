@@ -1,6 +1,7 @@
-var latest = require('./sensor-actions/latest');
-var sinceId = require('./sensor-actions/since-id');
-var lastDays = require('./sensor-actions/last-days');
+const latest = require('./sensor-actions/latest');
+const sinceId = require('./sensor-actions/since-id');
+const lastDays = require('./sensor-actions/last-days');
+const sinceDate = require('./sensor-actions/since-date');
 
 module.exports = function(RED) {
     function CrodeonSensor(config) {
@@ -13,6 +14,8 @@ module.exports = function(RED) {
         this.sinceIdType = config.sinceIdType;
         this.lastDays = config.lastDays;
         this.lastDaysType = config.lastDaysType;
+        this.sinceIsoDate = config.sinceIsoDate;
+        this.sinceIsoDateType = config.sinceIsoDateType;
         var node = this;
         
         node.on('input', function(msg) {
@@ -22,6 +25,8 @@ module.exports = function(RED) {
                 sinceId(RED, node, msg);
             } else if(node.action === 'lastDays') {
                 lastDays(RED, node, msg);
+            } else if(node.action === 'sinceIsoDate') {
+                sinceDate(RED, node, msg);
             }
         });
     }
