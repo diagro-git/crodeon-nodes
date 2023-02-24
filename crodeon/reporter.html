@@ -42,7 +42,7 @@
             $("#node-input-sensor-container").css('min-height','300px').css('min-width','450px').editableList({
                 addItem: function(container, i, data) {
                     const formGroup = $('<div/>', {class: 'form-group'});
-                    const lbl = $('<label/>', {style: 'text-align: right; font-weight: bold;'}).html('&nbsp;Naam&nbsp;&nbsp;');
+                    const lbl = $('<label/>', {style: 'text-align: right; font-weight: bold;'}).html('&nbsp;Name&nbsp;&nbsp;');
                     const lblIcon = $('<i/>', {class: 'fa fa-pencil'});
                     const inputName = $('<input/>', {type: 'text', class: 'node-crodeon-sensor-name'});
                     if(data.hasOwnProperty('name')) {
@@ -61,7 +61,7 @@
                 addItem: function(container, i, data) {
                     const formGroup = $('<div/>', {class: 'form-group'});
                     const formGroup2 = $('<div/>', {class: 'form-group', style: 'margin-top: 10px;'});
-                    const lblName = $('<label/>', {style: 'text-align: right; font-weight: bold;'}).html('&nbsp;Naam&nbsp;&nbsp;');
+                    const lblName = $('<label/>', {style: 'text-align: right; font-weight: bold;'}).html('&nbsp;Name&nbsp;&nbsp;');
                     const lblId = $('<label/>', {style: 'text-align: right;'}).html('ID&nbsp;&nbsp;');
                     const lblIcon = $('<i/>', {class: 'fa fa-pencil'});
                     const inputrelaisOutputName = $('<input/>', {type: 'text', class: 'node-crodeon-relais-output-name'});

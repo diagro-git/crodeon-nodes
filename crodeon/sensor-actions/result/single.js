@@ -1,4 +1,4 @@
-module.exports = function(result, node) {
+module.exports = function(result, node, RED) {
     const msgs = [];
     const dt = new Date(`${result['Date']}T${result['Time']}.000Z`);
     for(let i = 0 ; i < node.sensors.length ; i++) {
@@ -16,7 +16,7 @@ module.exports = function(result, node) {
     msgs.push(null);
 
     //status
-    node.status({fill:"green",shape:"dot",text:`value: ${result['ID']}`});
+    node.status({fill:"green",shape:"dot",text:`${RED._('sensor.value')}: ${result['ID']}`});
     //send msg to next node.
     node.send(msgs);
 }

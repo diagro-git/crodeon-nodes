@@ -10,7 +10,9 @@ module.exports = function(RED) {
         
         node.on('input', function(msg) {
             axios.interceptors.request.use(function (config) {
-                node.status({fill:"yellow",shape:"dot",text:'Pending...'});
+                if(node.id === config.env.node_id) {
+                    node.status({fill:"yellow",shape:"dot",text:RED._('relaisReader.pending')});
+                }
                 return config;
               }, function (error) {
                 return Promise.reject(error);
@@ -18,7 +20,9 @@ module.exports = function(RED) {
             );
         
             axios.interceptors.response.use(function (response) {
-                    node.status({fill:"yellow",shape:"dot",text:'Processing...'});
+                    if(node.id === response.config.env.node_id) {
+                        node.status({fill:"yellow",shape:"dot",text:RED._('relaisReader.processing')});
+                    }
                     return response;
                 }, function (error) {
                     return Promise.reject(error);
@@ -36,18 +40,21 @@ module.exports = function(RED) {
                 auth: {
                     username: node.api_credentials.username,
                     password: node.api_credentials.password
+                },
+                env: {
+                    node_id: node.id
                 }
             })
             .then(function(response) {
                 let relaisValue = parseInt(response.data.replaceAll('"', ''));
                 //status
-                node.status({fill:"green",shape:"dot",text:`value: ${relaisValue}`});
+                node.status({fill:"green",shape:"dot",text:`${RED._('relaisReader.value')}: ${relaisValue}`});
                 //send msg to next node.
                 node.send([{'payload' : relaisValue}]);
             })
             .catch(function(response) {
-                let status = response.hasOwnProperty('code') ? response.code : 'Error unknown!';
-                let payload = response.hasOwnProperty('message') ? response.message : 'Error unknown!';
+                let status = response.hasOwnProperty('code') ? response.code : RED._('relaisReader.error_unknown');
+                let payload = response.hasOwnProperty('message') ? response.message : RED._('relaisReader.error_unknown');
 
                 //node status is error
                 node.status({fill:"red", shape:"ring", text:status});

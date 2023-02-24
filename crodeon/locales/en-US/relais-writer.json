@@ -1,0 +1,15 @@
+{
+    "relaisWriter": {
+        "error_unknown": "Error unknown!",
+        "value": "Value",
+        "pending": "Pending...",
+        "processing": "Processing...",
+        "error": "Error",
+        "bad_payload": "Bad payload!",
+        "labels": {
+            "api_login": "API login",
+            "reporter": "Reporter",
+            "output": "Output ID"
+        }
+    }
+}

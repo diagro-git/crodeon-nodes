@@ -1,6 +1,6 @@
-module.exports = function(response, node) {
-    let status = response.hasOwnProperty('code') ? response.code : 'Error unknown!';
-    let payload = response.hasOwnProperty('message') ? response.message : 'Error unknown!';
+module.exports = function(response, node, RED) {
+    let status = response.hasOwnProperty('code') ? response.code : RED._('sensor.error_unknown');
+    let payload = response.hasOwnProperty('message') ? response.message : RED._('sensor.error_unknown');
 
     //node status is error
     node.status({fill:"red", shape:"ring", text:status});

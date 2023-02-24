@@ -3,9 +3,11 @@ const error = require('./error');
 const single = require('./result/single');
 const multiple = require('./result/multiple');
 
-module.exports = function(url, node) {
+module.exports = function(url, node, RED) {
     axios.interceptors.request.use(function (config) {
-        node.status({fill:"yellow",shape:"dot",text:'Pending...'});
+        if(node.id === config.env.node_id) {
+            node.status({fill:"yellow",shape:"dot",text: RED._('sensor.pending')});
+        }
         return config;
       }, function (error) {
         return Promise.reject(error);
@@ -13,7 +15,9 @@ module.exports = function(url, node) {
     );
 
     axios.interceptors.response.use(function (response) {
-            node.status({fill:"yellow",shape:"dot",text:'Processing...'});
+            if(node.id === response.config.env.node_id) {
+                node.status({fill:"yellow",shape:"dot",text: RED._('sensor.processing')});
+            }
             return response;
         }, function (error) {
             return Promise.reject(error);
@@ -29,16 +33,19 @@ module.exports = function(url, node) {
         auth: {
             username: node.api_credentials.username,
             password: node.api_credentials.password
+        },
+        env: {
+            node_id: node.id
         }
     })
     .then(function(response) {
         if(Array.isArray(response.data)) {
-            multiple(response.data, node);
+            multiple(response.data, node, RED);
         } else {
-            single(response.data, node);
+            single(response.data, node, RED);
         }
     })
     .catch(function(response) {
-        error(response, node);
+        error(response, node, RED);
     });
 }

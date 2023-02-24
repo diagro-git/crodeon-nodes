@@ -13,5 +13,5 @@ module.exports = function(RED, node, msg) {
 
     const url = `https://api.crodeon.com/api/v1/datasincedate/id/${node.reporter.id}/T/${sinceTimestamp}`;
 
-    _(url, node);
+    _(url, node, RED);
 }

@@ -99,19 +99,15 @@
 
 <script type="text/html" data-template-name="relais-writer">
     <div class="form-row">
-        <label for="node-input-api_credentials"><i class="fa fa-shield"></i> API login</label>
+        <label for="node-input-api_credentials"><i class="fa fa-shield"></i> <span data-i18n="relaisWriter.labels.api_login"></span></label>
         <input type="text" id="node-input-api_credentials">
     </div>
     <div class="form-row">
-        <label for="node-input-reporter"><i class="fa fa-server"></i> Reporter</label>
+        <label for="node-input-reporter"><i class="fa fa-server"></i> <span data-i18n="relaisWriter.labels.reporter"></span></label>
         <input type="text" id="node-input-reporter">
     </div>
     <div class="form-row">
-        <label for="node-input-relaisOutput"><i class="fa fa-pencil"></i> Output ID</label>
+        <label for="node-input-relaisOutput"><i class="fa fa-pencil"></i> <span data-i18n="relaisWriter.labels.output"></span></label>
         <input type="text" id="node-input-relaisOutput">
     </div>
-</script>
-
-<script type="text/html" data-help-name="relais-writer">
-    <p>Writes the value of msg.payload to the selected relais output ID.</p>
 </script>

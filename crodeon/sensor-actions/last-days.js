@@ -9,5 +9,5 @@ module.exports = function(RED, node, msg) {
     
     const url = `https://api.crodeon.com/api/v1/datadays/id/${node.reporter.id}/days/${lastDays}`;
 
-    _(url, node);
+    _(url, node, RED);
 }

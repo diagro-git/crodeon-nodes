@@ -62,15 +62,15 @@
             if(index < this.sensors.length) {
                 return this.sensors[index].name;
             } else {
-                return 'Error';
+                return RED._('sensor.error');
             }
         },
         icon: "font-awesome/fa-rocket",
         label: function() {
             if(this.sensors.length === 1) {
-                return "Sensor: " + this.sensors[0].name;
+                return `${RED._('sensor')}: ${this.sensors[0].name}`;
             } else {
-                return "Sensors: " + this.sensors.length;
+                return `${RED._('sensors')}: ${this.sensors.length}`;
             }
         },
         oneditprepare: function() {
@@ -126,10 +126,10 @@
             $("#node-input-action").typedInput({type:"action", types:[{
                 value: "action",
                 options: [
-                    { value: "latest", label: "Laatste waarde"},
-                    { value: "sinceId", label: "Vanaf bepaalde ID"},
-                    { value: "lastDays", label: "Laatste dagen"},
-                    { value: "sinceIsoDate", label: "Sinds datum"}
+                    { value: "latest", label: this._('sensor.action.latest')},
+                    { value: "sinceId", label: this._('sensor.action.sinceId')},
+                    { value: "lastDays", label: this._('sensor.action.lastDays')},
+                    { value: "sinceIsoDate", label: this._('sensor.action.sinceIsoDate')}
                 ]
             }]});
 
@@ -177,38 +177,34 @@
 
 <script type="text/html" data-template-name="sensor">
     <div class="form-row">
-        <label for="node-input-api_credentials"><i class="fa fa-shield"></i> API login</label>
+        <label for="node-input-api_credentials"><i class="fa fa-shield"></i> <span data-i18n="sensor.labels.api_login"></span></label>
         <input type="text" id="node-input-api_credentials">
     </div>
     <div class="form-row">
-        <label for="node-input-reporter"><i class="fa fa-server"></i> Reporter</label>
+        <label for="node-input-reporter"><i class="fa fa-server"></i> <span data-i18n="sensor.labels.reporter"></span></label>
         <input type="text" id="node-input-reporter">
     </div>
     <div class="form-row">
-        <label for="node-input-_sensors"><i class="fa fa-list"></i> Sensor(s)</label>
+        <label for="node-input-_sensors"><i class="fa fa-list"></i> <span data-i18n="sensor.labels.sensor"></span></label>
         <input type="text" id="node-input-_sensors">
     </div>
     <div class="form-row">
-        <label for="node-input-action"><i class="fa fa-flash"></i> Actie</label>
+        <label for="node-input-action"><i class="fa fa-flash"></i> <span data-i18n="sensor.labels.action"></span></label>
         <input type="text" id="node-input-action">
     </div>
     <div class="form-row" data-action="sinceId">
-        <label for="node-input-sinceId"><i class="fa fa-pencil"></i> Crodeon ID</label>
+        <label for="node-input-sinceId"><i class="fa fa-pencil"></i> <span data-i18n="sensor.labels.sinceId"></span></label>
         <input type="text" id="node-input-sinceId">
         <input type="hidden" id="node-input-sinceIdType">
     </div>
     <div class="form-row" data-action="lastDays">
-        <label for="node-input-lastDays"><i class="fa fa-pencil"></i> Laatste dagen</label>
+        <label for="node-input-lastDays"><i class="fa fa-pencil"></i> <span data-i18n="sensor.labels.lastDays"></span></label>
         <input type="text" id="node-input-lastDays">
         <input type="hidden" id="node-input-lastDaysType">
     </div>
     <div class="form-row" data-action="sinceIsoDate">
-        <label for="node-input-sinceIsoDate"><i class="fa fa-pencil"></i> Datum (ISO-8601)</label>
+        <label for="node-input-sinceIsoDate"><i class="fa fa-pencil"></i> <span data-i18n="sensor.labels.sinceIsoDate"></span></label>
         <input type="text" id="node-input-sinceIsoDate">
         <input type="hidden" id="node-input-sinceIsoDateType">
     </div>
-</script>
-
-<script type="text/html" data-help-name="sensor">
-    <p>Get the last value(s) of the sensor(s) you want to read.</p>
 </script>

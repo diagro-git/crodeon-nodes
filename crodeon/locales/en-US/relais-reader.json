@@ -1,0 +1,14 @@
+{
+    "relaisReader": {
+        "error_unknown": "Error unknown!",
+        "value": "Value",
+        "pending": "Pending...",
+        "processing": "Processing...",
+        "error": "Error",
+        "labels": {
+            "api_login": "API login",
+            "reporter": "Reporter",
+            "output": "Output ID"
+        }
+    }
+}

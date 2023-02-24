@@ -1,0 +1,27 @@
+{
+    "sensor": {
+        "error_unknown": "Error unknown!",
+        "results": "Results",
+        "value": "Value",
+        "pending": "Pending...",
+        "processing": "Processing...",
+        "error": "Error",
+        "sensor": "Sensor",
+        "sensors": "Sensors",
+        "action": {
+            "latest": "Latest value",
+            "sinceId": "Since ID",
+            "lastDays": "Amount of days",
+            "sinceIsoDate": "Since date"
+        },
+        "labels": {
+            "api_login": "API login",
+            "reporter": "Reporter",
+            "sensor": "Sensor(s)",
+            "action": "Action",
+            "sinceId": "Since ID",
+            "lastDays": "Amount of days",
+            "sinceIsoDate": "Date (ISO-8601)"
+        }
+    }
+}
