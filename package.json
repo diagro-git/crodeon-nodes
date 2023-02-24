@@ -1,6 +1,6 @@
 {
   "name": "@jeebby/node-crodeon",
-  "version": "1.0.80",
+  "version": "1.0.89",
   "description": "Crodeon Node-RED nodes",
   "keywords": [
     "Crodeon",
@@ -14,7 +14,9 @@
     "nodes": {
       "sensor": "crodeon/sensor.js",
       "api-credentials": "crodeon/api-credentials.js",
-      "reporter": "crodeon/reporter.js"
+      "reporter": "crodeon/reporter.js",
+      "relais-reader": "crodeon/relais-reader.js",
+      "relais-writer": "crodeon/relais-writer.js"
     }
   },
   "dependencies": {

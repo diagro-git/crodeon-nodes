@@ -1,0 +1,117 @@
+<script type="text/javascript">
+(function() {
+    function getRelaisOutputTypeOptions(reporter)
+    {
+        let options = [];
+        if(reporter !== void 0) {
+            for(let i = 0 ; i < reporter.relaisOutputs.length ; i++) {
+                options.push({value: reporter.relaisOutputs[i].id, label: reporter.relaisOutputs[i].name});
+            }
+        }
+        return options;
+    }
+
+    RED.nodes.registerType('relais-reader', {
+        category: 'crodeon',
+        color: '#C0C0C0',
+        defaults: {
+            api_credentials: {
+                value: '',
+                type: 'api-credentials',
+                required: true
+            },
+            reporter: {
+                value: '',
+                required: true,
+                type: 'reporter'
+            },
+            relaisOutput: {
+                value: '',
+                required: true
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-rocket",
+        label: function() {
+            if(this.relaisOutput != '') {
+                return 'Read output ID ' + this.relaisOutput;
+            } else {
+                return 'Read output ID';
+            }
+        },
+        oneditprepare: function() {
+            const that = this;
+            const reporter = RED.nodes.node(this.reporter);
+
+            $("#node-input-relaisOutput").typedInput({type:"relaisOutput", types:[{
+                value: "relaisOutput",
+                options: getRelaisOutputTypeOptions(RED.nodes.node(this.reporter))
+            }]});
+
+            $("#node-input-reporter").on('change', function() {
+                const value = $(this).val();
+                setTimeout(function() {
+                    $("#node-input-relaisOutput").typedInput('types', [{
+                        value: "relaisOutput",
+                        options: getRelaisOutputTypeOptions(RED.nodes.node(value))
+                    }]);
+                }, 500);
+            });
+
+            RED.events.on('nodes:add', function(node) {
+                if(node.type === 'reporter') {       
+                    setTimeout(function() {
+                        $("#node-input-relaisOutput").typedInput('types', [{
+                            value: "relaisOutput",
+                            options: getRelaisOutputTypeOptions(RED.nodes.node(node.id))
+                        }]);
+                    }, 500);
+                }
+            });
+
+            RED.events.on('nodes:change', function(node) {
+                if(node.type === 'reporter') {   
+                    setTimeout(function() {
+                        $("#node-input-relaisOutput").typedInput('types', [{
+                            value: "relaisOutput",
+                            options: getRelaisOutputTypeOptions(RED.nodes.node(node.id))
+                        }]);
+                    }, 500);
+                }
+            });
+
+            RED.events.on('nodes:remove', function(node) {
+                if(node.type === 'reporter') {   
+                    setTimeout(function() {
+                        $("#node-input-relaisOutput").typedInput('types', [{
+                            value: "relaisOutput",
+                            options: []
+                        }]);
+                        that.relaisOutput = '';
+                    }, 500);
+                }
+            });
+        }
+    });
+})();
+</script>
+
+<script type="text/html" data-template-name="relais-reader">
+    <div class="form-row">
+        <label for="node-input-api_credentials"><i class="fa fa-shield"></i> API login</label>
+        <input type="text" id="node-input-api_credentials">
+    </div>
+    <div class="form-row">
+        <label for="node-input-reporter"><i class="fa fa-server"></i> Reporter</label>
+        <input type="text" id="node-input-reporter">
+    </div>
+    <div class="form-row">
+        <label for="node-input-relaisOutput"><i class="fa fa-pencil"></i> Output ID</label>
+        <input type="text" id="node-input-relaisOutput">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="relais-reader">
+    <p>Get the current value of the selected relais ouput.</p>
+</script>
