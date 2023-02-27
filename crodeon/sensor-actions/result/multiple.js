@@ -1,7 +1,10 @@
 module.exports = function(results, node, RED) {
     const msgs = [];
     for(let i = 0 ; i < node.sensors.length ; i++) {
-        msgs[i] = [];
+        msgs[i] = {
+            sensor: node.sensors[i].name,
+            payload: []
+        };
     }
     //error output
     msgs.push(null);
@@ -10,14 +13,11 @@ module.exports = function(results, node, RED) {
         const dt = new Date(`${result['Date']}T${result['Time']}.000Z`);
         for(let i = 0 ; i < node.sensors.length ; i++) {
             if(result.hasOwnProperty(node.sensors[i].name)) {
-                msgs[i].push({
-                    sensor: node.sensors[i].name,
-                    payload: result[node.sensors[i].name],
+                msgs[i].payload.push({
+                    value: result[node.sensors[i].name],
                     crodeonId: result['ID'],
                     datetime: dt
                 });
-            } else {
-                msgs[i].push(null);
             }
         }
     });

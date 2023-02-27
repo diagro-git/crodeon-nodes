@@ -5,9 +5,11 @@ module.exports = function(result, node, RED) {
         if(result.hasOwnProperty(node.sensors[i].name)) {
             msgs[i] = {
                 sensor: node.sensors[i].name,
-                payload: result[node.sensors[i].name],
-                crodeonId: result['ID'],
-                datetime: dt
+                payload: {
+                    value: result[node.sensors[i].name],
+                    crodeonId: result['ID'],
+                    datetime: dt
+                }
             };
         } else {
             msgs[i] = null;
