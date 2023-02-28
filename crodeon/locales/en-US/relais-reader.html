@@ -1,3 +1,18 @@
-<script type="text/html" data-help-name="relais-reader">
-    <p>Get the current value of the selected relais ouput.</p>
+<script type="text/markdown" data-help-name="sensor">
+Read the value of the selected relais output.
+
+### Inputs
+: msg (object) : the msg object isn't used in this node.
+
+### Outputs
+: payload (integer) : contains the value 1 (=open) or 0 (=closed).
+
+### Details
+If an error occurred the `msg.payload` contains the error message.
+An extra property `msg.error` is set and contains the error object of Axios.
+
+#### Node status
+* green : everything is OK.
+* orange : node is busy with the request.
+* red : an error occurred.
 </script>

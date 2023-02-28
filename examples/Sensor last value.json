@@ -1,0 +1,142 @@
+[
+    {
+        "id": "5a88a0d39019e638",
+        "type": "tab",
+        "label": "Sensor last value",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4bec4294cdcdb97a",
+        "type": "sensor",
+        "z": "5a88a0d39019e638",
+        "api_credentials": "2655807ebedeb4b7",
+        "reporter": "1234",
+        "_sensors": "Temperature",
+        "sensors": [
+            {
+                "name": "Temperature"
+            }
+        ],
+        "outputs": 2,
+        "action": "latest",
+        "sinceId": 0,
+        "sinceIdType": "msg",
+        "lastDays": 0,
+        "lastDaysType": "msg",
+        "sinceIsoDate": 0,
+        "sinceIsoDateType": "msg",
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "f9a8deb695d7ff72"
+            ],
+            [
+                "3b65ebf367bdbbae"
+            ]
+        ]
+    },
+    {
+        "id": "874f6142ce3063b3",
+        "type": "inject",
+        "z": "5a88a0d39019e638",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 240,
+        "wires": [
+            [
+                "4bec4294cdcdb97a"
+            ]
+        ]
+    },
+    {
+        "id": "f9a8deb695d7ff72",
+        "type": "debug",
+        "z": "5a88a0d39019e638",
+        "name": "result",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3b65ebf367bdbbae",
+        "type": "debug",
+        "z": "5a88a0d39019e638",
+        "name": "error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "0ec9e708a3be6728",
+        "type": "comment",
+        "z": "5a88a0d39019e638",
+        "name": "",
+        "info": "Read the last temperature sensor value.",
+        "x": 140,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "2655807ebedeb4b7",
+        "type": "api-credentials",
+        "name": "Demo"
+    },
+    {
+        "id": "1234",
+        "type": "reporter",
+        "name": "Demo",
+        "sensors": [
+            {
+                "name": "Temperature"
+            },
+            {
+                "name": "Humidity"
+            }
+        ],
+        "relaisOutputs": [
+            {
+                "id": "9876",
+                "name": "Valve 1"
+            },
+            {
+                "id": "5432",
+                "name": "Valve 2"
+            }
+        ]
+    }
+]

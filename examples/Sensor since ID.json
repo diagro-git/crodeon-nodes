@@ -1,0 +1,142 @@
+[
+    {
+        "id": "5ac5bfe2c32585f0",
+        "type": "tab",
+        "label": "Sensor since ID",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f8f3022e352952f5",
+        "type": "sensor",
+        "z": "5ac5bfe2c32585f0",
+        "api_credentials": "2655807ebedeb4b7",
+        "reporter": "1234",
+        "_sensors": "Temperature",
+        "sensors": [
+            {
+                "name": "Temperature"
+            }
+        ],
+        "outputs": 2,
+        "action": "sinceId",
+        "sinceId": "payload",
+        "sinceIdType": "msg",
+        "lastDays": 0,
+        "lastDaysType": "msg",
+        "sinceIsoDate": 0,
+        "sinceIsoDateType": "msg",
+        "x": 460,
+        "y": 200,
+        "wires": [
+            [
+                "7d06d4be4fe906fb"
+            ],
+            [
+                "e6b487f423b38e5c"
+            ]
+        ]
+    },
+    {
+        "id": "0a56a52f493602e5",
+        "type": "inject",
+        "z": "5ac5bfe2c32585f0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "123456789",
+        "payloadType": "num",
+        "x": 200,
+        "y": 200,
+        "wires": [
+            [
+                "f8f3022e352952f5"
+            ]
+        ]
+    },
+    {
+        "id": "7d06d4be4fe906fb",
+        "type": "debug",
+        "z": "5ac5bfe2c32585f0",
+        "name": "result",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "e6b487f423b38e5c",
+        "type": "debug",
+        "z": "5ac5bfe2c32585f0",
+        "name": "error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "3b2dcd8e16dafefb",
+        "type": "comment",
+        "z": "5ac5bfe2c32585f0",
+        "name": "",
+        "info": "Read the temperature sensor values since Crodeon ID 123456789.",
+        "x": 180,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "2655807ebedeb4b7",
+        "type": "api-credentials",
+        "name": "Demo"
+    },
+    {
+        "id": "1234",
+        "type": "reporter",
+        "name": "Demo",
+        "sensors": [
+            {
+                "name": "Temperature"
+            },
+            {
+                "name": "Humidity"
+            }
+        ],
+        "relaisOutputs": [
+            {
+                "id": "9876",
+                "name": "Valve 1"
+            },
+            {
+                "id": "5432",
+                "name": "Valve 2"
+            }
+        ]
+    }
+]

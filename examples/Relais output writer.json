@@ -1,0 +1,109 @@
+[
+    {
+        "id": "a994296fe1540d5f",
+        "type": "tab",
+        "label": "Write relais output",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "feae077e66eb2309",
+        "type": "inject",
+        "z": "a994296fe1540d5f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "14af88cbfb181158"
+            ]
+        ]
+    },
+    {
+        "id": "106501d578e06ead",
+        "type": "debug",
+        "z": "a994296fe1540d5f",
+        "name": "result",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "4b8278a0ad4435ca",
+        "type": "comment",
+        "z": "a994296fe1540d5f",
+        "name": "",
+        "info": "Write 1 (=open) to the relais output of valve 2.",
+        "x": 160,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "14af88cbfb181158",
+        "type": "relais-writer",
+        "z": "a994296fe1540d5f",
+        "api_credentials": "2655807ebedeb4b7",
+        "reporter": "1234",
+        "relaisOutput": "5432",
+        "x": 420,
+        "y": 220,
+        "wires": [
+            [
+                "106501d578e06ead"
+            ]
+        ]
+    },
+    {
+        "id": "2655807ebedeb4b7",
+        "type": "api-credentials",
+        "name": "Demo"
+    },
+    {
+        "id": "1234",
+        "type": "reporter",
+        "name": "Demo",
+        "sensors": [
+            {
+                "name": "Temperature"
+            },
+            {
+                "name": "Humidity"
+            }
+        ],
+        "relaisOutputs": [
+            {
+                "id": "9876",
+                "name": "Valve 1"
+            },
+            {
+                "id": "5432",
+                "name": "Valve 2"
+            }
+        ]
+    }
+]

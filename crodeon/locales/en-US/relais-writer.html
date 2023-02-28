@@ -1,3 +1,18 @@
-<script type="text/html" data-help-name="relais-writer">
-    <p>Writes the value of msg.payload to the selected relais output ID.</p>
+<script type="text/markdown" data-help-name="sensor">
+Writes the value of `msg.payload` to the selected relais output.
+
+### Inputs
+: payload (integer) : the value written to the relais output (1 = open, 0 = closed).
+
+### Outputs
+: payload (integer) : contains the written value 1 (=open) or 0 (=closed).
+
+### Details
+If an error occurred the `msg.payload` contains the error message.
+An extra property `msg.error` is set and contains the error object of Axios.
+
+#### Node status
+* green : everything is OK.
+* orange : node is busy with the request.
+* red : an error occurred.
 </script>

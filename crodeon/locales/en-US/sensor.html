@@ -1,3 +1,45 @@
-<script type="text/html" data-help-name="sensor">
-    <p>Get the last value(s) of the sensor(s) you want to read.</p>
+<script type="text/markdown" data-help-name="sensor">
+Read the value(s) of the selected sensor(s). There are 4 ways to read values: last value, since a specific ID, since last date or last days.
+
+### Inputs
+: payload (string | integer) : can be used in the actions.
+
+### Outputs
+For every selected sensor there is an output.
+
+1. Sensor N
+: payload (object | array) : contains the value, sensor name and ID.
+
+2. Error
+: payload (object | string) : contains the error message or error response from Axios.
+: error (object) : the complete error response object from Axios.
+
+### Details
+This node fetches the values of the selected sensor(s).
+Every sensor has it's own output port. This is designed so you can use one sensor node and perform different actions with each sensor value(s).
+
+The `msg.payload` contains an object `{value: ..., crodeonId: ..., datetime: ...}`.
+* The value is the value of the sensor.
+* The crodeonId is de ID send of the Crodeon record holding this sensor value.
+* Datetime is the datetime in UTC timezone.
+
+#### Last value
+`msg.payload` contains an object and is the last value of the sensor.
+
+#### Since ID
+`msg.payload` contains an array of sensor result objects since a given Crodeon ID.
+You can inject the Crodeon ID with a `msg` property and set this in the configuration of this node.
+
+#### Last days
+`msg.payload` contains an array of sensor result objects for the last given days.
+You can inject the amount of last days with a `msg` property and set this in the configuration of this node.
+
+#### Since date
+`msg.payload` contains an array of sensor result objects since a given ISO-8601 date.
+You can inject the date with a `msg` property and set this in the configuration of this node.
+
+#### Node status
+* green : everything is OK.
+* orange : node is busy with the request.
+* red : an error occurred.
 </script>
