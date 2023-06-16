@@ -7,7 +7,7 @@ module.exports = function(RED) {
         this.password = this.credentials.password;
     }
 	
-    RED.nodes.registerType("api-credentials",CrodeonApiCredentials, {
+    RED.nodes.registerType("crodeon-api-credentials",CrodeonApiCredentials, {
         credentials: {
             api_key: {type: 'text'},
             username: {type: 'text'},

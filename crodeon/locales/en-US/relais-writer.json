@@ -1,5 +1,5 @@
 {
-    "relaisWriter": {
+    "crodeonRelaisWriter": {
         "error_unknown": "Error unknown!",
         "value": "Value",
         "pending": "Pending...",

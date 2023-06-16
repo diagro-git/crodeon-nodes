@@ -67,5 +67,5 @@ module.exports = function(RED) {
         });
     }
 	
-    RED.nodes.registerType("relais-reader",RelaisReader);
+    RED.nodes.registerType("crodeon-relais-reader",RelaisReader);
 }

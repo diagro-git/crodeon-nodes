@@ -17,7 +17,7 @@
         defaults: {
             api_credentials: {
                 value: '',
-                type: 'api-credentials',
+                type: 'crodeon-api-credentials',
                 required: true
             },
             reporter: {
@@ -60,7 +60,7 @@
             });
 
             RED.events.on('nodes:add', function(node) {
-                if(node.type === 'reporter') {       
+                if(node.type === 'crodeon-reporter') {       
                     setTimeout(function() {
                         $("#node-input-relaisOutput").typedInput('types', [{
                             value: "relaisOutput",
@@ -71,7 +71,7 @@
             });
 
             RED.events.on('nodes:change', function(node) {
-                if(node.type === 'reporter') {   
+                if(node.type === 'crodeon-reporter') {   
                     setTimeout(function() {
                         $("#node-input-relaisOutput").typedInput('types', [{
                             value: "relaisOutput",
@@ -82,7 +82,7 @@
             });
 
             RED.events.on('nodes:remove', function(node) {
-                if(node.type === 'reporter') {   
+                if(node.type === 'crodeon-reporter') {   
                     setTimeout(function() {
                         $("#node-input-relaisOutput").typedInput('types', [{
                             value: "relaisOutput",
@@ -97,7 +97,7 @@
 })();
 </script>
 
-<script type="text/html" data-template-name="relais-reader">
+<script type="text/html" data-template-name="crodeon-relais-reader">
     <div class="form-row">
         <label for="node-input-api_credentials"><i class="fa fa-shield"></i> <span data-i18n="relaisReader.labels.api_login"></span></label>
         <input type="text" id="node-input-api_credentials">

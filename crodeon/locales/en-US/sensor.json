@@ -1,5 +1,5 @@
 {
-    "sensor": {
+    "crodeonSensor": {
         "error_unknown": "Error unknown!",
         "results": "Results",
         "value": "Value",

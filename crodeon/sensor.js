@@ -31,5 +31,5 @@ module.exports = function(RED) {
         });
     }
 	
-    RED.nodes.registerType("sensor",CrodeonSensor);
+    RED.nodes.registerType("crodeon-sensor",CrodeonSensor);
 }

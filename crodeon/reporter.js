@@ -7,5 +7,5 @@ module.exports = function(RED) {
         this.relaisOutputs = config.relaisOutputs;
     }
 	
-    RED.nodes.registerType("reporter",CrodeonReporter);
+    RED.nodes.registerType("crodeon-reporter",CrodeonReporter);
 }

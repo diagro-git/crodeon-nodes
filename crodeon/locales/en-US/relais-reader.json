@@ -1,5 +1,5 @@
 {
-    "relaisReader": {
+    "crodeonRelaisReader": {
         "error_unknown": "Error unknown!",
         "value": "Value",
         "pending": "Pending...",

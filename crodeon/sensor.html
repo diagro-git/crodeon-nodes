@@ -11,19 +11,19 @@
         return options;
     }
 
-    RED.nodes.registerType('sensor', {
+    RED.nodes.registerType('crodeon-sensor', {
         category: 'crodeon',
         color: '#C0C0C0',
         defaults: {
             api_credentials: {
                 value: '',
-                type: 'api-credentials',
+                type: 'crodeon-api-credentials',
                 required: true
             },
             reporter: {
                 value: '',
                 required: true,
-                type: 'reporter'
+                type: 'crodeon-reporter'
             },
             _sensors: {
                 value: ""
@@ -62,15 +62,15 @@
             if(index < this.sensors.length) {
                 return this.sensors[index].name;
             } else {
-                return RED._('sensor.error');
+                return RED._('crodeonSensor.error');
             }
         },
         icon: "font-awesome/fa-rocket",
         label: function() {
             if(this.sensors.length === 1) {
-                return `${RED._('sensor')}: ${this.sensors[0].name}`;
+                return `${RED._('crodeonSensor.sensor')}: ${this.sensors[0].name}`;
             } else {
-                return `${RED._('sensors')}: ${this.sensors.length}`;
+                return `${RED._('crodeonSensor.sensors')}: ${this.sensors.length}`;
             }
         },
         oneditprepare: function() {
@@ -84,7 +84,7 @@
             }]});
 
             RED.events.on('nodes:add', function(node) {
-                if(node.type === 'reporter') {       
+                if(node.type === 'crodeon-reporter') {       
                     setTimeout(function() {
                         $("#node-input-_sensors").typedInput('types', [{
                             value: "_sensors",
@@ -96,7 +96,7 @@
             });
 
             RED.events.on('nodes:change', function(node) {
-                if(node.type === 'reporter') {   
+                if(node.type === 'crodeon-reporter') {   
                     setTimeout(function() {
                         $("#node-input-_sensors").typedInput('types', [{
                             value: "_sensors",
@@ -108,7 +108,7 @@
             });
 
             RED.events.on('nodes:remove', function(node) {
-                if(node.type === 'reporter') {   
+                if(node.type === 'crodeon-reporter') {   
                     setTimeout(function() {
                         $("#node-input-_sensors").typedInput('types', [{
                             value: "_sensors",
@@ -126,10 +126,10 @@
             $("#node-input-action").typedInput({type:"action", types:[{
                 value: "action",
                 options: [
-                    { value: "latest", label: this._('sensor.action.latest')},
-                    { value: "sinceId", label: this._('sensor.action.sinceId')},
-                    { value: "lastDays", label: this._('sensor.action.lastDays')},
-                    { value: "sinceIsoDate", label: this._('sensor.action.sinceIsoDate')}
+                    { value: "latest", label: this._('crodeonSensor.action.latest')},
+                    { value: "sinceId", label: this._('crodeonSensor.action.sinceId')},
+                    { value: "lastDays", label: this._('crodeonSensor.action.lastDays')},
+                    { value: "sinceIsoDate", label: this._('crodeonSensor.action.sinceIsoDate')}
                 ]
             }]});
 
@@ -175,35 +175,35 @@
 })();
 </script>
 
-<script type="text/html" data-template-name="sensor">
+<script type="text/html" data-template-name="crodeon-sensor">
     <div class="form-row">
-        <label for="node-input-api_credentials"><i class="fa fa-shield"></i> <span data-i18n="sensor.labels.api_login"></span></label>
+        <label for="node-input-api_credentials"><i class="fa fa-shield"></i> <span data-i18n="crodeonSensor.labels.api_login"></span></label>
         <input type="text" id="node-input-api_credentials">
     </div>
     <div class="form-row">
-        <label for="node-input-reporter"><i class="fa fa-server"></i> <span data-i18n="sensor.labels.reporter"></span></label>
+        <label for="node-input-reporter"><i class="fa fa-server"></i> <span data-i18n="crodeonSensor.labels.reporter"></span></label>
         <input type="text" id="node-input-reporter">
     </div>
     <div class="form-row">
-        <label for="node-input-_sensors"><i class="fa fa-list"></i> <span data-i18n="sensor.labels.sensor"></span></label>
+        <label for="node-input-_sensors"><i class="fa fa-list"></i> <span data-i18n="crodeonSensor.labels.sensor"></span></label>
         <input type="text" id="node-input-_sensors">
     </div>
     <div class="form-row">
-        <label for="node-input-action"><i class="fa fa-flash"></i> <span data-i18n="sensor.labels.action"></span></label>
+        <label for="node-input-action"><i class="fa fa-flash"></i> <span data-i18n="crodeonSensor.labels.action"></span></label>
         <input type="text" id="node-input-action">
     </div>
     <div class="form-row" data-action="sinceId">
-        <label for="node-input-sinceId"><i class="fa fa-pencil"></i> <span data-i18n="sensor.labels.sinceId"></span></label>
+        <label for="node-input-sinceId"><i class="fa fa-pencil"></i> <span data-i18n="crodeonSensor.labels.sinceId"></span></label>
         <input type="text" id="node-input-sinceId">
         <input type="hidden" id="node-input-sinceIdType">
     </div>
     <div class="form-row" data-action="lastDays">
-        <label for="node-input-lastDays"><i class="fa fa-pencil"></i> <span data-i18n="sensor.labels.lastDays"></span></label>
+        <label for="node-input-lastDays"><i class="fa fa-pencil"></i> <span data-i18n="crodeonSensor.labels.lastDays"></span></label>
         <input type="text" id="node-input-lastDays">
         <input type="hidden" id="node-input-lastDaysType">
     </div>
     <div class="form-row" data-action="sinceIsoDate">
-        <label for="node-input-sinceIsoDate"><i class="fa fa-pencil"></i> <span data-i18n="sensor.labels.sinceIsoDate"></span></label>
+        <label for="node-input-sinceIsoDate"><i class="fa fa-pencil"></i> <span data-i18n="crodeonSensor.labels.sinceIsoDate"></span></label>
         <input type="text" id="node-input-sinceIsoDate">
         <input type="hidden" id="node-input-sinceIsoDateType">
     </div>
